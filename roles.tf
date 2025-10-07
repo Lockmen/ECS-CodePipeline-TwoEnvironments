@@ -1,7 +1,7 @@
 # IAM Role for CodePipeline
 resource "aws_iam_role" "codepipeline_role" {
   name               = "demo-codepipeline-role"
-  assume_role_policy = templatefile("policies/assume_codepipeline.json", {
+  assume_role_policy = templatefile("policies/assume.json", {
     service_name = "codepipeline"
   })
 }

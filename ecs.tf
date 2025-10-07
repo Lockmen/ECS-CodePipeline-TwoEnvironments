@@ -47,10 +47,10 @@ module "ecs" {
 
       container_definitions = {
         prod = {
-          cpu       = 512
-          memory    = 1024
-          essential = true
-          image     = "${aws_ecr_repository.demo_app.repository_url}:latest"
+          cpu                    = 512
+          memory                 = 1024
+          essential              = true
+          image                  = "${aws_ecr_repository.demo_app.repository_url}:latest"
           readonlyRootFilesystem = false
           portMappings = [{
             name          = "http"
@@ -89,10 +89,10 @@ module "ecs" {
 
       container_definitions = {
         dev = {
-          cpu       = 256
-          memory    = 512
-          essential = true
-          image     = "${aws_ecr_repository.demo_app.repository_url}:latest"
+          cpu                    = 256
+          memory                 = 512
+          essential              = true
+          image                  = "${aws_ecr_repository.demo_app.repository_url}:latest"
           readonlyRootFilesystem = false
           portMappings = [{
             name          = "http"

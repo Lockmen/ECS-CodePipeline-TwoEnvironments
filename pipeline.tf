@@ -28,5 +28,22 @@ resource "aws_codepipeline" "main" {
     }
   }
 
-  # ... Next steps will follow
+  # Stage 2: Build - Build Docker image and push to ECR
+  stage {
+    name = "Build"
+
+    action {
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      version          = "1"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["build_output"]
+
+      configuration = {
+        ProjectName = aws_codebuild_project.build_and_push.name
+      }
+    }
+  }
 }

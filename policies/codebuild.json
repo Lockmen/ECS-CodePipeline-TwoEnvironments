@@ -1,0 +1,46 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:Get*",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${bucket_name}",
+        "arn:aws:s3:::${bucket_name}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:Get*",
+        "ecr:Batch*",
+        "ecr:PutImage",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateNetwork*",
+        "ec2:Describe*",
+        "ec2:DeleteNetworkInterface"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

@@ -66,4 +66,33 @@ resource "aws_codepipeline" "main" {
       }
     }
   }
+
+  stage {
+    name = "Acceptance"
+
+    action {
+      name      = "ApproveProduction"
+      category  = "Approval"
+      owner     = "AWS"
+      provider  = "Manual"
+      version   = "1"
+      run_order = 1
+    }
+
+    action {
+      name            = "DeployProduction"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      version         = "1"
+      input_artifacts = ["build_output"]
+      run_order       = 2
+
+      configuration = {
+        ClusterName = module.ecs.cluster_name
+        ServiceName = module.ecs.services["prod"].name
+        FileName    = "imagespec.json"
+      }
+    }
+  }
 }

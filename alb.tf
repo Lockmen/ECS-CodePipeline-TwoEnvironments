@@ -38,20 +38,22 @@ module "alb" {
 
   target_groups = {
     prod = {
-      name_prefix       = "prod"
-      protocol          = "HTTP"
-      port              = 80
-      target_type       = "ip"
-      create_attachment = false
-      health_check      = local.health_check
+      name_prefix          = "prod"
+      protocol             = "HTTP"
+      port                 = 80
+      target_type          = "ip"
+      create_attachment    = false
+      deregistration_delay = 30
+      health_check         = local.health_check
     }
     dev = {
-      name_prefix       = "dev"
-      protocol          = "HTTP"
-      port              = 80
-      target_type       = "ip"
-      create_attachment = false
-      health_check      = local.health_check
+      name_prefix          = "dev"
+      protocol             = "HTTP"
+      port                 = 80
+      target_type          = "ip"
+      create_attachment    = false
+      deregistration_delay = 30
+      health_check         = local.health_check
     }
   }
 

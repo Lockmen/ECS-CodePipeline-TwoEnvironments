@@ -9,3 +9,4 @@ production need to be accepted by someone with permissions.
 
 Read more about this example here:
 - [CodePipeline, CodeBuild, and multiple environments in ECS](https://pabis.eu/blog/2025-10-13-CodePipeline-CodeBuild-Multi-Environments-ECS.html)
+- [On dev.to](https://dev.to/aws-builders/codepipeline-codebuild-and-multiple-environments-in-ecs-27l6)

@@ -46,7 +46,7 @@ module "ecs" {
       }
 
       container_definitions = {
-        prod = {
+        web = {
           cpu                    = 512
           memory                 = 1024
           essential              = true
@@ -64,7 +64,7 @@ module "ecs" {
       load_balancer = {
         service = {
           target_group_arn = module.alb.target_groups["prod"].arn
-          container_name   = "prod"
+          container_name   = "web"
           container_port   = 80
         }
       }
@@ -88,7 +88,7 @@ module "ecs" {
       }
 
       container_definitions = {
-        dev = {
+        web = {
           cpu                    = 256
           memory                 = 512
           essential              = true
@@ -106,7 +106,7 @@ module "ecs" {
       load_balancer = {
         service = {
           target_group_arn = module.alb.target_groups["dev"].arn
-          container_name   = "dev"
+          container_name   = "web"
           container_port   = 80
         }
       }

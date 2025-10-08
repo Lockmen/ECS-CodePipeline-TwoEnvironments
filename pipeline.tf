@@ -21,8 +21,8 @@ resource "aws_codepipeline" "main" {
 
       configuration = {
         ConnectionArn    = aws_codeconnections_connection.github.arn
-        FullRepositoryId = "ppabis/demo-app-repo"
-        BranchName       = "main"
+        FullRepositoryId = "ppabis/demo-app"
+        BranchName       = "master"
         DetectChanges    = true
       }
     }
@@ -43,6 +43,26 @@ resource "aws_codepipeline" "main" {
 
       configuration = {
         ProjectName = aws_codebuild_project.build_and_push.name
+      }
+    }
+  }
+
+  # Stage 3: Deploy - Deploy to ECS
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      version         = "1"
+      input_artifacts = ["build_output"]
+
+      configuration = {
+        ClusterName = module.ecs.cluster_name
+        ServiceName = module.ecs.services["dev"].name
+        FileName    = "imagespec.json"
       }
     }
   }

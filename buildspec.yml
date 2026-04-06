@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - export AWS_REGION=$(echo $ECR_REPOSITORY_URL | cut -d '.' -f 4)
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REPOSITORY_URL
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - docker build -t $ECR_REPOSITORY_URL:$IMAGE_TAG .
+      - docker tag $ECR_REPOSITORY_URL:$IMAGE_TAG $ECR_REPOSITORY_URL:latest
+      - docker push $ECR_REPOSITORY_URL:latest
+      - docker push $ECR_REPOSITORY_URL:$IMAGE_TAG
+  post_build:
+    commands:
+      - printf '[{"name":"web","imageUri":"%s"}]' $ECR_REPOSITORY_URL:$IMAGE_TAG > imagespec.json
+artifacts:
+  files:
+    - imagespec.json
